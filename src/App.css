@@ -1,0 +1,22 @@
+body {
+    bACKGROUND:#E5E5E5;
+}
+
+.form {
+    width: 50%;
+    margin: 30px auto;
+}
+
+.form h3 {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 1em;
+
+}
+
+
