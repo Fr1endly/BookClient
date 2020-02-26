@@ -1,12 +1,14 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react';
+import { login  } from '../../actions/auth'; 
+import { connect } from 'react-redux';
 
-
-//Do redux now
-export default function Login() {
+function Login({ login }) {
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
     })
+
+    const { email, password } = formData
 
     const onChange = (e) => {
         setFormData({
@@ -16,12 +18,13 @@ export default function Login() {
     }
 
     const onSubmit = (e) => {
-        return null
+        e.preventDefault();
+        login({ email, password})
     }
 
     return (
         <Fragment>
-            <form className='form'>
+            <form className='form' onSubmit={e => onSubmit(e)}>
                 <h3 >Please sign in</h3>
                 <div className="form-group">
                     <input 
@@ -50,3 +53,8 @@ export default function Login() {
         </Fragment>
     )
 }
+
+export default connect(
+    null,
+    { login }
+)(Login)

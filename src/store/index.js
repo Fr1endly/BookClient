@@ -5,13 +5,22 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 const initialState = {};
-
 const middleware = [thunk];
-
 const store = createStore(
   rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
+let currentState;
+store.subscribe( () => {
+  let oldState = currentState;
+  currentState = store.getState();
+  if( oldState && oldState.auth.token !== currentState.auth.token ) {
+    const token = currentState.auth.token;
+    token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
+  }
+
+})
 
 export default store;
