@@ -4,8 +4,10 @@
 
 body {
     bACKGROUND:#E5E5E5;
+    font-family: 'Roboto', 'Arial';
 }
 
+/* Login and Register form */
 .form {
     width: 50%;
     margin: 30px auto;
@@ -14,6 +16,8 @@ body {
 .form h3 {
     text-align: center;
     text-transform: uppercase;
+    color: #133237;
+    margin-bottom: ;
 }
 
 .form-group input {
@@ -23,6 +27,7 @@ body {
 
 }
 
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -41,9 +46,24 @@ body {
 .nav-links {
     font-family: 'Roboto', 'Arial';
     text-transform: uppercase;
+    font-weight: 600;
     list-style: none;
 }
+
 .nav-links  li{
     display: inline-block;
     padding: 0px 20px;
+}
+
+/* Landing */
+.landing {
+    margin: 15px 0; 
+    font-family: 'Roboto', 'Arial';
+    text-align: center;
+}
+
+.landing h2 {
+    text-transform: uppercase;
+    color: #133237;
+    
 }

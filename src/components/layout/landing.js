@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 export default function landing() {
     return (
-        <div>
-            <h3>Hello and welcome</h3>
+        <div className='landing'>
+            <h2>Hello and welcome</h2>
         </div>
     )
 }
