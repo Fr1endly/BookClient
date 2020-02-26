@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Register from './components/auth/Register';
 import Landing from './components/layout/landing';
 import Login from './components/auth/Login'
+import Navbar from './components/layout/navbar'
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
@@ -21,6 +22,7 @@ export default () => {
   return(
     <Provider store={store}>
       <Router>
+        <Navbar />
         <Fragment>
           <Switch>
             <Route exact path='/' component={Landing}/>

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
 body {
     bACKGROUND:#E5E5E5;
 }
@@ -19,4 +23,27 @@ body {
 
 }
 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #338593;
+    color: 	#f2f2f2;
+}
 
+.logo {
+    font-family: 'Amatic SC';
+    padding: 10px 10px;
+    font-weight: 700;
+    font-size: 2.5em;
+}
+
+.nav-links {
+    font-family: 'Roboto', 'Arial';
+    text-transform: uppercase;
+    list-style: none;
+}
+.nav-links  li{
+    display: inline-block;
+    padding: 0px 20px;
+}

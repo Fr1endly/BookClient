@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { login  } from '../../actions/auth'; 
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-function Login({ login }) {
+function Login({ login, isAuthenicated }) {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -20,6 +21,10 @@ function Login({ login }) {
     const onSubmit = (e) => {
         e.preventDefault();
         login({ email, password})
+    }
+    
+    if(isAuthenicated) {
+        return <Redirect to='/' />
     }
 
     return (
@@ -54,7 +59,11 @@ function Login({ login }) {
     )
 }
 
+const mapStateToProps = state => ({
+    isAuthenicated: state.auth.isAuthenicated
+})
+
 export default connect(
-    null,
+    mapStateToProps,
     { login }
 )(Login)

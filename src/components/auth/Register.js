@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { register  } from '../../actions/auth'; 
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
-function Register({ register }) {
+function Register({ register, isAuthenicated }) {
     const [formData, setFormData] = useState({
         email: '',
         name: '',
@@ -26,6 +27,10 @@ function Register({ register }) {
         } else {
             register({ name, email, password})
         }
+    }
+
+    if(isAuthenicated) {
+        return <Redirect to='/' />
     }
 
     return (
@@ -78,7 +83,11 @@ function Register({ register }) {
     )
 }
 
+const mapStateToProps = state => ({
+    isAuthenicated: state.auth.isAuthenicated
+})
+
 export default connect(
-    null,
+    mapStateToProps,
     { register }
 )(Register)
