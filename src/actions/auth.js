@@ -81,7 +81,6 @@ export const register = ({ name, email, password }) => async dispatch => {
     try {
         // We get x-auth-token in response
         const res = await axios.post('http://localhost:3000/api/users', body, config)
-        localStorage()
         // and sending it you auth reducer 
         dispatch({
             type: REGISTER_SUCCESS,
