@@ -2,8 +2,9 @@ import React, { Fragment, useState } from 'react';
 import { register  } from '../../actions/auth'; 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
+import { setAlert } from '../../actions/alert'
 
-function Register({ register, isAuthenicated }) {
+function Register({ register, isAuthenicated, setAlert }) {
     const [formData, setFormData] = useState({
         email: '',
         name: '',
@@ -23,7 +24,7 @@ function Register({ register, isAuthenicated }) {
     const onSubmit = (e) => {
         e.preventDefault();
         if(password!==password2) {
-            console.log('PASSWORDS DON"T MATCH')
+            setAlert("Passwords don't match", 'danger')
         } else {
             register({ name, email, password})
         }
@@ -89,5 +90,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { register }
+    { register, setAlert }
 )(Register)

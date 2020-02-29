@@ -5,6 +5,7 @@ import Register from './components/auth/Register';
 import Landing from './components/layout/landing';
 import Login from './components/auth/Login'
 import Navbar from './components/layout/navbar'
+import Alert from './components/Alert'
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
@@ -24,6 +25,7 @@ export default () => {
       <Router>
         <Navbar />
         <Fragment>
+          <Alert />
           <Switch>
             <Route exact path='/' component={Landing}/>
             <Route path='/register' component={Register}/>
