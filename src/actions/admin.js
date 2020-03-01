@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GET_USERS } from './types'
 import setAuthToken from '../utils/setAuthToken';
+import { setAlert } from './alert'
 
 export const getUsers = () => async dispatch => {
     if(localStorage.token) {
@@ -15,6 +16,8 @@ export const getUsers = () => async dispatch => {
         })
     } catch(err) {
         const errors = err.response.data.errors
-        errors.forEach( error => console.log(error))
+        if(errors) {
+            errors.forEach( error => dispatch(setAlert(error.msg, 'danger')))
+        }
     }
 }
