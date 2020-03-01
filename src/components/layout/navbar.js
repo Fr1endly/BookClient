@@ -11,6 +11,9 @@ const Navbar = ({ auth: {isAuthenicated, loading}, logout }) => {
             <li>
                 <a href="#!" onClick={logout}>Logout</a>
             </li>
+            <li>
+                <Link to='/admin'>Admin</Link>
+            </li>
         </Fragment>
     );
     

@@ -6,6 +6,7 @@ import Landing from './components/layout/landing';
 import Login from './components/auth/Login'
 import Navbar from './components/layout/navbar'
 import Alert from './components/Alert'
+import AdminPanel from './components/admin'
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
@@ -30,6 +31,7 @@ export default () => {
             <Route exact path='/' component={Landing}/>
             <Route path='/register' component={Register}/>
             <Route path='/login' component={Login}/>
+            <Route path='/admin' component={AdminPanel}/>
           </Switch>
         </Fragment>
       </Router>
