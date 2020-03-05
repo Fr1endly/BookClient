@@ -10,6 +10,9 @@ const AdminPanel = ({ users, getUsers }) => {
 
   return (
     <div className="container">
+      <div>
+        <Link to="/admin/users/new">Create new user</Link>
+      </div>
       <table className="admin-table">
         <tbody>
           <tr>
@@ -23,7 +26,9 @@ const AdminPanel = ({ users, getUsers }) => {
           </tr>
           {users.map(user => (
             <tr key={user.email}>
-              <td>{user.name}</td>
+              <td>
+                <Link to={`/admin/users/${user._id}`}>{user.name}</Link>
+              </td>
               <td>{user.email}</td>
               <td>{user.date}</td>
               <td>{user.lastLoginDate}</td>
