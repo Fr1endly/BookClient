@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USERS } from "./types";
+import { GET_USERS, GET_USER_BY_ID } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 
@@ -36,11 +36,7 @@ export const createOrEditUser = formData => async dispatch => {
   const body = JSON.stringify(formData);
   console.log(body);
   try {
-    const res = await axios.post(
-      "http://localhost:3000/admin/users",
-      body,
-      config
-    );
+    await axios.post("http://localhost:3000/admin/users", body, config);
 
     dispatch(setAlert("User created", "success"));
   } catch (err) {
@@ -48,5 +44,25 @@ export const createOrEditUser = formData => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
     }
+  }
+};
+
+export const getUserById = id => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+  try {
+    const res = await axios.get(`http://localhost:3000/admin/users/${id}`);
+    const payload = {
+      ...res.data,
+      id: id
+    };
+    dispatch({
+      type: GET_USER_BY_ID,
+      payload: payload
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
