@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { getUserById, createOrEditUser } from "../../actions/admin";
+import { getUserById, createOrEditUser, clearUser } from "../../actions/admin";
 import { connect } from "react-redux";
 
 //To-Do on submit handler
@@ -18,21 +18,15 @@ const AdminUserView = ({
   user,
   loading,
   getUserById,
-  createOrEditUser
+  createOrEditUser,
+  clearUser
 }) => {
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    if (!user || formData.id !== match.params.id) getUserById(match.params.id);
-    if (!loading) {
-      const userData = { ...initialState };
-      // Map user from app state to local form state
-      for (const key in user) {
-        if (key in userData) userData[key] = user[key];
-      }
-      setFormData(userData);
-    }
-  }, [getUserById, user, match.params.id]);
+    if (!user || user.id !== match.params.id) getUserById(match.params.id);
+    setFormData({ ...user });
+  }, [user]);
 
   const onChange = e => {
     setFormData({
@@ -122,6 +116,8 @@ const mapStateToProps = state => ({
   loading: state.admin.loading
 });
 
-export default connect(mapStateToProps, { getUserById, createOrEditUser })(
-  AdminUserView
-);
+export default connect(mapStateToProps, {
+  getUserById,
+  createOrEditUser,
+  clearUser
+})(AdminUserView);

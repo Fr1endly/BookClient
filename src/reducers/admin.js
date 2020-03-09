@@ -1,4 +1,4 @@
-import { GET_USERS, GET_USER_BY_ID } from "../../src/actions/types";
+import { GET_USERS, GET_USER_BY_ID, CLEAR_USER } from "../../src/actions/types";
 
 const initialState = {
   users: [],
@@ -20,6 +20,11 @@ export default (state = initialState, actions) => {
         ...state,
         user: payload,
         loading: false
+      };
+    case CLEAR_USER:
+      return {
+        ...state,
+        user: null
       };
     default:
       return state;

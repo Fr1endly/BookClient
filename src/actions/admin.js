@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USERS, GET_USER_BY_ID } from "./types";
+import { GET_USERS, GET_USER_BY_ID, CLEAR_USER } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 
@@ -65,4 +65,10 @@ export const getUserById = id => async dispatch => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const clearUser = () => async dispatch => {
+  dispatch({
+    type: CLEAR_USER
+  });
 };
