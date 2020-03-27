@@ -22,7 +22,7 @@ const AdminCreateUser = ({ createOrEditUser, setAlert }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    createOrEditUser(formData);
+    createOrEditUser(formData, true);
   };
 
   return (

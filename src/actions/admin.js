@@ -3,6 +3,8 @@ import { GET_USERS, GET_USER_BY_ID, CLEAR_USER } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 
+// TO-DO SETALERTS IN CATCH BLOCKS
+// Fetch all users
 export const getUsers = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -22,7 +24,8 @@ export const getUsers = () => async dispatch => {
   }
 };
 
-export const createOrEditUser = formData => async dispatch => {
+// Create new user or edit.
+export const createOrEditUser = (formData, edit = false) => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -34,11 +37,13 @@ export const createOrEditUser = formData => async dispatch => {
   };
 
   const body = JSON.stringify(formData);
-  console.log(body);
+  console.log(edit);
   try {
     await axios.post("http://localhost:3000/admin/users", body, config);
 
-    dispatch(setAlert("User created", "success"));
+    dispatch(
+      setAlert(edit ? "User succesfuly edited" : "User created", "success")
+    );
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -47,6 +52,7 @@ export const createOrEditUser = formData => async dispatch => {
   }
 };
 
+// Get user based on id
 export const getUserById = id => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -67,6 +73,19 @@ export const getUserById = id => async dispatch => {
   }
 };
 
+export const deleteUser = (id, history) => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+  try {
+    await axios.delete(`http://localhost:3000/admin/users/${id}`);
+    history.push("/admin");
+  } catch (err) {
+    console.log(error);
+  }
+};
+
+// Clear state of current user
 export const clearUser = () => async dispatch => {
   dispatch({
     type: CLEAR_USER

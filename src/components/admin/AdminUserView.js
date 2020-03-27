@@ -1,6 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { getUserById, createOrEditUser, clearUser } from "../../actions/admin";
+import {
+  getUserById,
+  createOrEditUser,
+  clearUser,
+  deleteUser
+} from "../../actions/admin";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 //To-Do on submit handler
 
@@ -15,11 +21,11 @@ const initialState = {
 
 const AdminUserView = ({
   match,
+  history,
   user,
-  loading,
   getUserById,
   createOrEditUser,
-  clearUser
+  deleteUser
 }) => {
   const [formData, setFormData] = useState(initialState);
 
@@ -38,14 +44,17 @@ const AdminUserView = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    createOrEditUser(formData);
+    createOrEditUser(formData, true);
+  };
+
+  const onClick = e => {
+    deleteUser(match.params.id, history);
   };
 
   const { email, name, password, isAdmin, isActive } = formData;
 
   return (
     <Fragment>
-      {" "}
       <form className="form" onSubmit={e => onSubmit(e)}>
         <h3>Create new user</h3>
         <div className="form-group">
@@ -107,6 +116,19 @@ const AdminUserView = ({
           <input type="submit" value="Submit" style={{ marginTop: "15px" }} />
         </div>
       </form>
+      <div className="btn-group" style={{ background: "red" }}>
+        <button
+          style={{
+            width: "100%",
+            border: "0px",
+            background: "red",
+            color: "white"
+          }}
+          onClick={e => onClick(e)}
+        >
+          DELETE
+        </button>
+      </div>
     </Fragment>
   );
 };
@@ -119,5 +141,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getUserById,
   createOrEditUser,
-  clearUser
-})(AdminUserView);
+  clearUser,
+  deleteUser
+})(withRouter(AdminUserView));
