@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import Register from "./components/auth/Register";
 import Landing from "./components/layout/landing";
 import Login from "./components/auth/Login";
-import Navbar from "./components/layout/navbar";
 import Header from "./components/layout/Header";
 import Alert from "./components/Alert";
 import AdminPanel from "./components/admin";
