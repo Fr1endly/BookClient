@@ -8,6 +8,7 @@ import Header from "./components/layout/Header";
 import Alert from "./components/Alert";
 import AdminPanel from "./components/admin";
 import AdminUserView from "./components/admin/AdminUserView";
+import AdminPanelMat from "./components/admin/AdminPanelMat";
 import AdminCreateUser from "./components/admin/AdminCreateUser";
 import "./App.css";
 import setAuthToken from "./utils/setAuthToken";
@@ -30,7 +31,6 @@ export default () => {
       <CssBaseline />
       <Container>
         <Router>
-          {/* <Navbar /> */}
           <Header />
           <Fragment>
             <Alert />
@@ -38,7 +38,7 @@ export default () => {
               <Route exact path="/" component={Landing} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <AdminRoute exact path="/admin" component={AdminPanel} />
+              <AdminRoute exact path="/admin" component={AdminPanelMat} />
               <AdminRoute
                 exact
                 path="/admin/users/new"

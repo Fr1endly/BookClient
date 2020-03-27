@@ -118,7 +118,7 @@ function Header(props) {
           variant="body2"
           className={classes.toolbarLink}
         >
-          Forum
+          Planner
         </MatLink>
       </Toolbar>
     </React.Fragment>
