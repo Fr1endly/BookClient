@@ -41,7 +41,9 @@ const UserTable = ({ users, getUsers }) => {
         <TableBody>
           {users.map(user => (
             <TableRow key={user._id}>
-              <TableCell>{user.name}</TableCell>
+              <TableCell>
+                <Link to={`/admin/users/${user._id}`}>{user.name}</Link>
+              </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.date}</TableCell>
               <TableCell>{user.lastLoginDate}</TableCell>

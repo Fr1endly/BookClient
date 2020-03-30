@@ -56,7 +56,7 @@ const AdminUserView = ({
   return (
     <Fragment>
       <form className="form" onSubmit={e => onSubmit(e)}>
-        <h3>Create new user</h3>
+        <h3 style={{ textTransform: "capitalize" }}>{name}</h3>
         <div className="form-group">
           <input
             type="email"

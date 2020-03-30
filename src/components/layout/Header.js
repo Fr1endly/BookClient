@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
-import MatLink from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -61,13 +61,13 @@ function Header(props) {
 
   const guestLinks = (
     <Fragment>
-      <Link to="/login">
+      <Link component={RouterLink} to="/login">
         <Button variant="outlined" size="small" style={{ marginRight: "5px" }}>
           Sign in
         </Button>
       </Link>
 
-      <Link to="/register">
+      <Link component={RouterLink} to="/register">
         <Button variant="outlined" size="small">
           Sign up
         </Button>
@@ -87,7 +87,9 @@ function Header(props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          <Link to="/">Roll & Role</Link>
+          <Link component={RouterLink} to="/">
+            Roll & Role
+          </Link>
         </Typography>
         {!loading && (isAuthenicated ? authLinks : guestLinks)}
       </Toolbar>
@@ -96,30 +98,32 @@ function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        <MatLink
+        <Link
           color="inherit"
           noWrap
           variant="body2"
           className={classes.toolbarLink}
         >
           News
-        </MatLink>
-        <MatLink
+        </Link>
+        <Link
+          component={RouterLink}
           color="inherit"
           noWrap
           variant="body2"
+          to="/rulebook"
           className={classes.toolbarLink}
         >
           Documentation
-        </MatLink>
-        <MatLink
+        </Link>
+        <Link
           color="inherit"
           noWrap
           variant="body2"
           className={classes.toolbarLink}
         >
           Planner
-        </MatLink>
+        </Link>
       </Toolbar>
     </React.Fragment>
   );
