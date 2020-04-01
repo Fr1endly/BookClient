@@ -46,7 +46,7 @@ function Header(props) {
         Sign out
       </Button>
       {isAdmin ? (
-        <Link to="/admin">
+        <Link component={RouterLink} to="/admin">
           <Button
             variant="outlined"
             size="small"
