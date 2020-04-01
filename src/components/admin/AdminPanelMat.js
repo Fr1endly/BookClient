@@ -2,6 +2,8 @@ import React from "react";
 import UserTable from "./UserTable";
 import { connect } from "react-redux";
 
+import UserView from "./UserView";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -50,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function VerticalTabs() {
+function VerticalTabs({ user }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -74,6 +76,7 @@ function VerticalTabs() {
       <main className={classes.content}>
         <Container>
           <TabPanel value={value} index={0}>
+            {user ? <UserView /> : null}
             <UserTable />
           </TabPanel>
           <TabPanel value={value} index={1}>
@@ -85,4 +88,8 @@ function VerticalTabs() {
   );
 }
 
-export default connect()(VerticalTabs);
+const mapStateToProps = state => ({
+  user: state.admin.user
+});
+
+export default connect(mapStateToProps)(VerticalTabs);

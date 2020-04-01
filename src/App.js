@@ -7,7 +7,6 @@ import Login from "./components/auth/Login";
 import Header from "./components/layout/Header";
 import Alert from "./components/Alert";
 import RuleBook from "./components/rulebook";
-import AdminPanel from "./components/admin";
 import AdminUserView from "./components/admin/AdminUserView";
 import AdminPanelMat from "./components/admin/AdminPanelMat";
 import AdminCreateUser from "./components/admin/AdminCreateUser";

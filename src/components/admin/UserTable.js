@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../actions/admin";
+import { getUsers, getUserById } from "../../actions/admin";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserTable = ({ users, getUsers }) => {
+const UserTable = ({ users, getUsers, getUserById }) => {
   useEffect(() => {
     getUsers();
   }, []);
@@ -40,10 +40,8 @@ const UserTable = ({ users, getUsers }) => {
         </TableHead>
         <TableBody>
           {users.map(user => (
-            <TableRow key={user._id}>
-              <TableCell>
-                <Link to={`/admin/users/${user._id}`}>{user.name}</Link>
-              </TableCell>
+            <TableRow key={user._id} onClick={e => getUserById(user._id)}>
+              <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.date}</TableCell>
               <TableCell>{user.lastLoginDate}</TableCell>
@@ -63,4 +61,4 @@ const mapStateToProps = state => ({
   users: state.admin.users
 });
 
-export default connect(mapStateToProps, { getUsers })(UserTable);
+export default connect(mapStateToProps, { getUsers, getUserById })(UserTable);
