@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getUsers, getUserById } from "../../actions/admin";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -12,18 +13,21 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3)
+  userTablePaper: {
+    overflowX: "auto",
+    padding: theme.spacing(1)
   }
 }));
 
 const UserTable = ({ users, getUsers, getUserById }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     getUsers();
   }, []);
 
   return (
-    <Fragment>
+    <Paper className={classes.userTablePaper}>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
         Users
       </Typography>
@@ -53,7 +57,7 @@ const UserTable = ({ users, getUsers, getUserById }) => {
           ))}
         </TableBody>
       </Table>
-    </Fragment>
+    </Paper>
   );
 };
 

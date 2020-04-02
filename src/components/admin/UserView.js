@@ -13,21 +13,26 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    padding: theme.spacing(1)
   },
   checkBoxControl: {
-    flex: 1
+    width: "100%",
+    marginBottom: theme.spacing(1)
+  },
+  FormControl: {
+    width: "100%"
   },
   TextFieldControl: {
-    width: "100"
-  },
-  FormControl: {}
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  }
 }));
 
 const UserView = ({ user }) => {
   const classes = useStyles();
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [name, setName] = useState("");
   const handleChange = event => {
     setChecked(event.target.checked);
@@ -36,15 +41,39 @@ const UserView = ({ user }) => {
   return (
     <Paper elevation={1} className={classes.root}>
       <FormControlLabel
-      className={classes.checkBoxControl}
+        className={classes.checkBoxControl}
         control={
-          <Checkbox checked={checked} onChange={handleChange} name="edit" />
+          <Checkbox
+            checked={checked}
+            color="primary"
+            onChange={handleChange}
+            name="edit"
+          />
         }
         label="Edit"
       />
       <div className={classes.FormControl}>
         <form>
-          <TextField value={name} onChange={e => setName(e.target.value)} />
+          <TextField
+            fullWidth
+            className={classes.TextFieldControl}
+            variant="outlined"
+            disabled={!checked}
+            label="name"
+            value={user.name}
+            onChange={e => setName(e.target.value)}
+            size="small"
+          />
+          <TextField
+            className={classes.TextFieldControl}
+            fullWidth
+            variant="outlined"
+            disabled={!checked}
+            label="email"
+            value={user.email}
+            onChange={e => setName(e.target.value)}
+            size="small"
+          />
         </form>
       </div>
     </Paper>
