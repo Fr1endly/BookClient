@@ -35,6 +35,7 @@ function Header(props) {
     auth: { isAuthenicated, loading, isAdmin },
     logout
   } = props;
+
   const authLinks = (
     <Fragment>
       <Button

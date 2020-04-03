@@ -14,8 +14,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
   userTablePaper: {
-    overflowX: "auto",
-    padding: theme.spacing(1)
+    overflowX: "auto"
   }
 }));
 
@@ -27,8 +26,8 @@ const UserTable = ({ users, getUsers, getUserById }) => {
   }, []);
 
   return (
-    <Paper className={classes.userTablePaper}>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+    <Fragment>
+      <Typography component="h2" variant="h6" color="primary">
         Users
       </Typography>
       <Table size="small">
@@ -57,7 +56,7 @@ const UserTable = ({ users, getUsers, getUserById }) => {
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </Fragment>
   );
 };
 

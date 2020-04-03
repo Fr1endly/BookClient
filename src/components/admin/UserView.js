@@ -31,9 +31,9 @@ const useStyles = makeStyles(theme => ({
 
 const UserView = ({ user }) => {
   const classes = useStyles();
-
   const [checked, setChecked] = useState(false);
   const [name, setName] = useState("");
+
   const handleChange = event => {
     setChecked(event.target.checked);
   };

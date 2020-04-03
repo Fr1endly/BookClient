@@ -30,10 +30,6 @@ const AdminUserView = ({
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    if (user) clearUser();
-  }, []);
-
-  useEffect(() => {
     if (!user || user.id !== match.params.id) getUserById(match.params.id);
     setFormData({ ...user });
   }, [user]);

@@ -33,26 +33,24 @@ export default () => {
       <Container>
         <Router>
           <Header />
-          <Fragment>
-            <Alert />
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
-              <PrivateRoute path="/rulebook" component={RuleBook} />
-              <AdminRoute exact path="/admin" component={AdminPanelMat} />
-              <AdminRoute
-                exact
-                path="/admin/users/new"
-                component={AdminCreateUser}
-              />
-              <AdminRoute
-                exact
-                path="/admin/users/:id"
-                component={AdminUserView}
-              />
-            </Switch>
-          </Fragment>
+          <Alert />
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <PrivateRoute path="/rulebook" component={RuleBook} />
+            <AdminRoute exact path="/admin" component={AdminPanelMat} />
+            <AdminRoute
+              exact
+              path="/admin/users/new"
+              component={AdminCreateUser}
+            />
+            <AdminRoute
+              exact
+              path="/admin/users/:id"
+              component={AdminUserView}
+            />
+          </Switch>
         </Router>
       </Container>
     </Provider>
