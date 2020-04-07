@@ -30,7 +30,7 @@ export default () => {
   return (
     <Provider store={store}>
       <CssBaseline />
-      <Container>
+      <Container maxWidth="xl">
         <Router>
           <Header />
           <Alert />
@@ -39,6 +39,7 @@ export default () => {
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <PrivateRoute path="/rulebook" component={RuleBook} />
+            <PrivateRoute path="/rulebook/:chapter" component={RuleBook} />
             <AdminRoute exact path="/admin" component={AdminPanelMat} />
             <AdminRoute
               exact

@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Header from "./Header";
+import Body from "./Body";
+import Drawer from "./Drawer";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    height: "100vh"
+    flexWrap: "wrap"
   }
 }));
 export default function index() {
@@ -12,9 +15,9 @@ export default function index() {
 
   return (
     <div className={classes.root}>
-      <div>Header</div>
-      <div>Drawer</div>
-      <div>Body</div>
+      <Header />
+      <Drawer />
+      <Body />
     </div>
   );
 }
