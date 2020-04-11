@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import clsx from "clsx";
 import SlateEditor from "../editor";
@@ -32,8 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Body = ({ open }) => {
+const Body = (props) => {
   const classes = useStyles();
+  const { open } = props;
   return (
     <Fragment>
       <main

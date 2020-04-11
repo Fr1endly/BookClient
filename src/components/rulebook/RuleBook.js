@@ -1,16 +1,18 @@
 import React, { Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "./Header";
 import Body from "./Body";
 import Drawer from "./Drawer";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
 }));
-export default function index() {
+
+const RuleBook = ({ match }) => {
   const classes = useStyles();
 
   return (
@@ -20,4 +22,6 @@ export default function index() {
       <Body />
     </div>
   );
-}
+};
+
+export default RuleBook;

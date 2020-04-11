@@ -6,7 +6,7 @@ import Landing from "./components/layout/landing";
 import Login from "./components/auth/Login";
 import Header from "./components/layout/Header";
 import Alert from "./components/Alert";
-import RuleBook from "./components/rulebook";
+import RuleBook from "./components/rulebook/RuleBook";
 import AdminUserView from "./components/admin/AdminUserView";
 import AdminPanelMat from "./components/admin/AdminPanelMat";
 import AdminCreateUser from "./components/admin/AdminCreateUser";
@@ -38,8 +38,8 @@ export default () => {
             <Route exact path="/" component={Landing} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/rulebook" component={RuleBook} />
-            <PrivateRoute path="/rulebook/:chapter" component={RuleBook} />
+            <PrivateRoute exact path="/rulebook" component={RuleBook} />
+            <PrivateRoute path="/rulebook/:title" component={RuleBook} />
             <AdminRoute exact path="/admin" component={AdminPanelMat} />
             <AdminRoute
               exact

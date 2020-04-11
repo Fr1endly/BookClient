@@ -2,10 +2,14 @@ import {
   SET_DRAWER_OPEN,
   SET_DRAWER_CLOSE,
   TOGGLE_DRAWER,
+  LOAD_CHAPTERS,
 } from "../actions/types";
 
 const initialState = {
   open: false,
+  chapters: [],
+  selectedChapter: null,
+  loading: false,
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +30,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         open: !state.open,
+      };
+    case LOAD_CHAPTERS:
+      return {
+        ...state,
+        chapters: payload,
       };
     default:
       return state;

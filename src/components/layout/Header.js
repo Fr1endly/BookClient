@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -7,33 +6,34 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
-    borderBottom: `1px solid ${theme.palette.divider}`
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   toolbarTitle: {
-    flex: 1
+    flex: 1,
   },
   toolbarSecondary: {
     justifyContent: "center",
     overflowX: "auto",
-    borderBottom: `1px solid ${theme.palette.divider}`
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   toolbarLink: {
     padding: theme.spacing(1),
-    flexShrink: 0
-  }
+    flexShrink: 0,
+  },
 }));
 
 function Header(props) {
   const classes = useStyles();
   const {
     auth: { isAuthenicated, loading, isAdmin },
-    logout
+    logout,
   } = props;
 
   const authLinks = (
@@ -130,8 +130,8 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Header);

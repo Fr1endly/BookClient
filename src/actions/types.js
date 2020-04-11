@@ -17,3 +17,4 @@ export const CLEAR_USER = "CLEAR_USER";
 export const SET_DRAWER_OPEN = "SET_DRAWER_OPEN";
 export const SET_DRAWER_CLOSE = "SET_DRAWER_CLOSE";
 export const TOGGLE_DRAWER = "TOGGLE_DRAWER";
+export const LOAD_CHAPTERS = "LOAD_CHAPTERS";

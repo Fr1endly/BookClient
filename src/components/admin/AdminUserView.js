@@ -3,7 +3,7 @@ import {
   getUserById,
   createOrEditUser,
   clearUser,
-  deleteUser
+  deleteUser,
 } from "../../actions/admin";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -16,7 +16,7 @@ const initialState = {
   password: "",
   isAdmin: false,
   isActive: false,
-  id: ""
+  id: "",
 };
 
 const AdminUserView = ({
@@ -25,29 +25,29 @@ const AdminUserView = ({
   user,
   getUserById,
   createOrEditUser,
-  deleteUser
+  deleteUser,
 }) => {
   const [formData, setFormData] = useState(initialState);
-
+  console.log(match.params);
   useEffect(() => {
     if (!user || user.id !== match.params.id) getUserById(match.params.id);
     setFormData({ ...user });
   }, [user]);
 
-  const onChange = e => {
+  const onChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]:
-        e.target.type === "checkbox" ? e.target.checked : e.target.value
+        e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createOrEditUser(formData, true);
   };
 
-  const onClick = e => {
+  const onClick = (e) => {
     deleteUser(match.params.id, history);
   };
 
@@ -55,7 +55,7 @@ const AdminUserView = ({
 
   return (
     <Fragment>
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <h3 style={{ textTransform: "capitalize" }}>{name}</h3>
         <div className="form-group">
           <input
@@ -64,7 +64,7 @@ const AdminUserView = ({
             id="email"
             placeholder="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className="form-group">
@@ -74,7 +74,7 @@ const AdminUserView = ({
             id="name"
             placeholder="name"
             value={name}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className="form-group">
@@ -83,7 +83,7 @@ const AdminUserView = ({
             name="password"
             id="password"
             placeholder="password"
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className="form-group">
@@ -94,7 +94,7 @@ const AdminUserView = ({
               name="isAdmin"
               id="is-admin-checkbox"
               checked={isAdmin}
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
             />
           </label>
           <label
@@ -107,7 +107,7 @@ const AdminUserView = ({
               name="isActive"
               id="is-active-checkbox"
               checked={isActive}
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
             />
           </label>
         </div>
@@ -122,9 +122,9 @@ const AdminUserView = ({
             width: "100%",
             border: "0px",
             background: "red",
-            color: "white"
+            color: "white",
           }}
-          onClick={e => onClick(e)}
+          onClick={(e) => onClick(e)}
         >
           DELETE
         </button>
@@ -133,14 +133,14 @@ const AdminUserView = ({
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.admin.user,
-  loading: state.admin.loading
+  loading: state.admin.loading,
 });
 
 export default connect(mapStateToProps, {
   getUserById,
   createOrEditUser,
   clearUser,
-  deleteUser
+  deleteUser,
 })(withRouter(AdminUserView));

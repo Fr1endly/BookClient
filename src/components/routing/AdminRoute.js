@@ -8,7 +8,7 @@ const AdminRoute = (
 ) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       !isAuthenicated && !loading ? (
         <div>Please login</div>
       ) : !isAdmin ? (
@@ -20,6 +20,6 @@ const AdminRoute = (
   />
 );
 
-const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = (state) => ({ auth: state.auth });
 
 export default connect(mapStateToProps)(AdminRoute);

@@ -1,5 +1,13 @@
-import React, { useMemo, useState, Fragment, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  Fragment,
+  useCallback,
+  useEffect,
+} from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { fetchChapters } from "../../actions/ruleBook";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,13 +53,22 @@ const Element = ({ attributes, children, element }) => {
   }
 };
 
-export default connect()((props) => {
+const Editor = ({ match, chapters }) => {
   const classes = useStyles();
   const editor = useMemo(() => withReact(createEditor()), []);
   const [value, setValue] = useState(initialValue);
 
-  const renderElement = useCallback((props) => <Element {...props} />, []);
+  useEffect(() => {
+    if (chapters !== undefined) {
+      let activeChapter = chapters.filter(
+        (chapter) => chapter.title === match.params.title
+      )[0];
+      if (activeChapter !== undefined)
+        setValue(JSON.parse(activeChapter.sections));
+    }
+  }, [match.params]);
 
+  const renderElement = useCallback((props) => <Element {...props} />, []);
   return (
     <Fragment>
       <div className={classes.root}>
@@ -66,4 +83,10 @@ export default connect()((props) => {
       </div>
     </Fragment>
   );
+};
+
+const mapStateToProps = (state) => ({
+  chapters: state.ruleBook.chapters,
 });
+
+export default connect(mapStateToProps)(withRouter(Editor));
