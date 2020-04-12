@@ -1,7 +1,8 @@
 import React from "react";
-import UserTable from "./UserTable";
 import { connect } from "react-redux";
 import UserView from "./UserView";
+import UserTable from "./UserTable";
+import ChaptersTable from "./ChaptersTable";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -12,29 +13,29 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     display: "flex",
-    height: "100vh"
+    height: "100vh",
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
+    borderRight: `1px solid ${theme.palette.divider}`,
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
+    overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
-  }
+    flexDirection: "column",
+  },
 }));
 
 function TabPanel(props) {
@@ -57,7 +58,7 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`
+    "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
 
@@ -98,7 +99,13 @@ function AdminPanel({ user }) {
             </Grid>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <ChaptersTable />
+                </Paper>
+              </Grid>
+            </Grid>
           </TabPanel>
         </Container>
       </main>
@@ -106,8 +113,8 @@ function AdminPanel({ user }) {
   );
 }
 
-const mapStateToProps = state => ({
-  user: state.admin.user
+const mapStateToProps = (state) => ({
+  user: state.admin.user,
 });
 
 export default connect(mapStateToProps)(AdminPanel);

@@ -8,7 +8,6 @@ import {
 const initialState = {
   open: false,
   chapters: [],
-  selectedChapter: null,
   loading: false,
 };
 

@@ -12,10 +12,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
-  userTablePaper: {
-    overflowX: "auto"
-  }
+const useStyles = makeStyles((theme) => ({
+  tableRow: {
+    cursor: "pointer",
+  },
 }));
 
 const UserTable = ({ users, getUsers, getUserById }) => {
@@ -42,8 +42,12 @@ const UserTable = ({ users, getUsers, getUserById }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map(user => (
-            <TableRow key={user._id} onClick={e => getUserById(user._id)}>
+          {users.map((user) => (
+            <TableRow
+              key={user._id}
+              onClick={(e) => getUserById(user._id)}
+              className={classes.tableRow}
+            >
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.date}</TableCell>
@@ -60,8 +64,8 @@ const UserTable = ({ users, getUsers, getUserById }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  users: state.admin.users
+const mapStateToProps = (state) => ({
+  users: state.admin.users,
 });
 
 export default connect(mapStateToProps, { getUsers, getUserById })(UserTable);
