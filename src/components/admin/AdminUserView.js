@@ -28,7 +28,7 @@ const AdminUserView = ({
   deleteUser,
 }) => {
   const [formData, setFormData] = useState(initialState);
-  console.log(match.params);
+
   useEffect(() => {
     if (!user || user.id !== match.params.id) getUserById(match.params.id);
     setFormData({ ...user });

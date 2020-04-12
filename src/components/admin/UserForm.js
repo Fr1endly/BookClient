@@ -7,24 +7,26 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
+// DEPRICATED
+
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
     "& > *": {
       margin: theme.spacing(1),
       width: theme.spacing(16),
-      height: theme.spacing(16)
-    }
-  }
+      height: theme.spacing(16),
+    },
+  },
 }));
 
 const UserView = ({ user }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
@@ -47,8 +49,8 @@ const UserView = ({ user }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.admin.user
+const mapStateToProps = (state) => ({
+  user: state.admin.user,
 });
 
 export default connect(mapStateToProps)(UserView);
