@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import clsx from "clsx";
-import SlateEditor from "../editor";
+import SlateEditor from "../editor/Display";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
