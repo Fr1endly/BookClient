@@ -2,19 +2,21 @@ import React from "react";
 import { useSlate } from "slate-react";
 import CustomEditor from "./CustomEditor";
 
-const MarkButton = ({ format }) => {
+const LinkButton = () => {
   const editor = useSlate();
   return (
     <button
-      active={CustomEditor.isMarkActive(editor, format)}
+      active={CustomEditor.isLinkActive(editor)}
       onMouseDown={(event) => {
         event.preventDefault();
-        CustomEditor.toggleMark(editor, format);
+        const url = window.prompt("Enter the URL of the link:");
+        if (!url) return;
+        CustomEditor.insertLink(editor, url);
       }}
     >
-      {format}
+      LINK
     </button>
   );
 };
 
-export default MarkButton;
+export default LinkButton;

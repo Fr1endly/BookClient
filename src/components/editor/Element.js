@@ -14,6 +14,12 @@ const Element = ({ attributes, children, element }) => {
       return <li {...attributes}>{children}</li>;
     case "numbered-list":
       return <ol {...attributes}>{children}</ol>;
+    case "link":
+      return (
+        <a {...attributes} href={element.url}>
+          {children}
+        </a>
+      );
     default:
       return <p {...attributes}>{children}</p>;
   }
