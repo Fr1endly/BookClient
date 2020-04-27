@@ -1,11 +1,13 @@
 import React from "react";
 import { useSlate } from "slate-react";
 import CustomEditor from "./CustomEditor";
+import IconButton from "@material-ui/core/IconButton";
+import LinkIcon from "@material-ui/icons/Link";
 
 const LinkButton = () => {
   const editor = useSlate();
   return (
-    <button
+    <IconButton
       active={CustomEditor.isLinkActive(editor)}
       onMouseDown={(event) => {
         event.preventDefault();
@@ -14,8 +16,8 @@ const LinkButton = () => {
         CustomEditor.insertLink(editor, url);
       }}
     >
-      LINK
-    </button>
+      <LinkIcon />
+    </IconButton>
   );
 };
 

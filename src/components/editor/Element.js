@@ -1,4 +1,7 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
 
 const Element = ({ attributes, children, element }) => {
   switch (element.type) {
@@ -7,21 +10,33 @@ const Element = ({ attributes, children, element }) => {
     case "bulleted-list":
       return <ul {...attributes}>{children}</ul>;
     case "heading-one":
-      return <h1 {...attributes}>{children}</h1>;
+      return (
+        <Typography {...attributes} variant="h4">
+          {children}
+        </Typography>
+      );
     case "heading-two":
-      return <h2 {...attributes}>{children}</h2>;
+      return (
+        <Typography {...attributes} variant="h5">
+          {children}
+        </Typography>
+      );
     case "list-item":
       return <li {...attributes}>{children}</li>;
     case "numbered-list":
       return <ol {...attributes}>{children}</ol>;
     case "link":
       return (
-        <a {...attributes} href={element.url}>
+        <Link {...attributes} component={RouterLink} to={element.url}>
           {children}
-        </a>
+        </Link>
       );
     default:
-      return <p {...attributes}>{children}</p>;
+      return (
+        <Typography {...attributes} variant="body1">
+          {children}
+        </Typography>
+      );
   }
 };
 

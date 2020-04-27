@@ -1,4 +1,4 @@
-import { Editor, Transforms } from "slate";
+import { Editor, Transforms, Range } from "slate";
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 

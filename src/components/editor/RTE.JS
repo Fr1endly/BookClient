@@ -11,6 +11,16 @@ import MarkButton from "./MarkButton";
 import LinkButton from "./LinkButton";
 import initialValue from "./InitialValue";
 import CustomEditor from "./CustomEditor";
+import { makeStyles } from "@material-ui/core/styles";
+import FormatBoldIcon from "@material-ui/icons/FormatBold";
+import FormatItalicIcon from "@material-ui/icons/FormatItalic";
+import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
+import LooksOneIcon from "@material-ui/icons/LooksOne";
+import LooksTwoIcon from "@material-ui/icons/LooksTwo";
+import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
+import Divider from "@material-ui/core/Divider";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -19,7 +29,18 @@ const HOTKEYS = {
   "mod+`": "code",
 };
 
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  editor: {
+    border: "1px solid black",
+  },
+}));
+
 const RichTextExample = () => {
+  const classes = useStyles();
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -30,18 +51,34 @@ const RichTextExample = () => {
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
-      <div>
-        <MarkButton format="bold" icon="format_bold" />
-        <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="block-quote" icon="format_quote" />
-        <BlockButton format="numbered-list" icon="format_list_numbered" />
-        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+      <div className={classes.toolbar}>
+        <MarkButton format="bold">
+          <FormatBoldIcon />
+        </MarkButton>
+        <MarkButton format="italic">
+          <FormatItalicIcon />
+        </MarkButton>
+        <MarkButton format="underline">
+          <FormatUnderlinedIcon />
+        </MarkButton>
+        <BlockButton format="heading-one">
+          <LooksOneIcon />
+        </BlockButton>
+        <BlockButton format="heading-two">
+          <LooksTwoIcon />
+        </BlockButton>
+        <BlockButton format="block-quote">
+          <FormatQuoteIcon />
+        </BlockButton>
+        <BlockButton format="numbered-list">
+          <FormatListNumberedIcon />
+        </BlockButton>
+        <BlockButton format="bulleted-list">
+          <FormatListBulletedIcon />
+        </BlockButton>
         <LinkButton />
       </div>
+      <Divider />
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}

@@ -10,7 +10,7 @@ import RuleBook from "./components/rulebook/RuleBook";
 import AdminUserView from "./components/admin/AdminUserView";
 import AdminPanelMat from "./components/admin/AdminPanelMat";
 import AdminCreateUser from "./components/admin/AdminCreateUser";
-import Editor from "./components/editor/RTE";
+import RTE from "./components/editor/RTE";
 import "./App.css";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
@@ -52,7 +52,7 @@ export default () => {
               path="/admin/users/:id"
               component={AdminUserView}
             />
-            <AdminRoute exact path="/admin/newChapter" component={Editor} />
+            <AdminRoute exact path="/admin/newChapter" component={RTE} />
           </Switch>
         </Router>
       </Container>
