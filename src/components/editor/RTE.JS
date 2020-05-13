@@ -21,6 +21,9 @@ import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import InputBase from "@material-ui/core/TextField";
+import { Input } from "@material-ui/core";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -32,7 +35,6 @@ const HOTKEYS = {
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
-    justifyContent: "center",
   },
   editor: {
     border: "1px solid black",
@@ -52,37 +54,42 @@ const RichTextExample = () => {
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
       <div className={classes.toolbar}>
-        <MarkButton format="bold">
-          <FormatBoldIcon />
-        </MarkButton>
-        <MarkButton format="italic">
-          <FormatItalicIcon />
-        </MarkButton>
-        <MarkButton format="underline">
-          <FormatUnderlinedIcon />
-        </MarkButton>
-        <BlockButton format="heading-one">
-          <LooksOneIcon />
-        </BlockButton>
-        <BlockButton format="heading-two">
-          <LooksTwoIcon />
-        </BlockButton>
-        <BlockButton format="block-quote">
-          <FormatQuoteIcon />
-        </BlockButton>
-        <BlockButton format="numbered-list">
-          <FormatListNumberedIcon />
-        </BlockButton>
-        <BlockButton format="bulleted-list">
-          <FormatListBulletedIcon />
-        </BlockButton>
-        <LinkButton />
+        <div className={classes.buttonGroup}>
+          <MarkButton format="bold">
+            <FormatBoldIcon />
+          </MarkButton>
+          <MarkButton format="italic">
+            <FormatItalicIcon />
+          </MarkButton>
+          <MarkButton format="underline">
+            <FormatUnderlinedIcon />
+          </MarkButton>
+          <BlockButton format="heading-one">
+            <LooksOneIcon />
+          </BlockButton>
+          <BlockButton format="heading-two">
+            <LooksTwoIcon />
+          </BlockButton>
+          <BlockButton format="block-quote">
+            <FormatQuoteIcon />
+          </BlockButton>
+          <BlockButton format="numbered-list">
+            <FormatListNumberedIcon />
+          </BlockButton>
+          <BlockButton format="bulleted-list">
+            <FormatListBulletedIcon />
+          </BlockButton>
+          <LinkButton />
+        </div>
+        <FormControl>
+          <InputBase label="title" inputProps={{ "aria-label": "naked" }} />
+        </FormControl>
       </div>
       <Divider />
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
+        placeholder="Entser some rich text…"
         spellCheck
         autoFocus
         onKeyDown={(event) => {

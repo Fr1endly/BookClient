@@ -18,7 +18,7 @@ export const closeDrawer = () => (dispatch) =>
 export const toggleDrawer = () => (dispatch) =>
   dispatch({ type: TOGGLE_DRAWER });
 
-// Load chapters, sort them and load to store.
+// Load chapters and sort them.
 export const fetchChapters = () => async (dispatch) => {
   try {
     const res = await axios.get("http://localhost:3000/api/chapters");
@@ -29,4 +29,11 @@ export const fetchChapters = () => async (dispatch) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+// Save chapter to db.
+export const saveChapter = (chapter) => async (dispatch) => {
+  try {
+    const content = JSON.stringify(chapter.content);
+  } catch (err) {}
 };
