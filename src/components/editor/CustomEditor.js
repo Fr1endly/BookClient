@@ -44,11 +44,13 @@ const CustomEditor = {
       Editor.addMark(editor, format, true);
     }
   },
+  
   insertLink(editor, url) {
     if (editor.selection) {
       CustomEditor.wrapLink(editor, url);
     }
   },
+
   isLinkActive(editor) {
     const [link] = Editor.nodes(editor, { match: (n) => n.type === "link" });
     return !!link;

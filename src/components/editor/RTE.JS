@@ -3,12 +3,14 @@ import isHotkey from "is-hotkey";
 import { Editable, withReact, Slate } from "slate-react";
 import { createEditor } from "slate";
 import { withHistory } from "slate-history";
-import { withLinks } from "./with-links";
+import { withLinks } from "./withLinks/withLinks";
+import { withTables } from "./withTables/withTables";
+import { InsertTableButton, DeleteTableButton } from "./withTables/Components";
 import Element from "./Element";
 import Leaf from "./Leaf";
-import BlockButton from "./BlockButton";
-import MarkButton from "./MarkButton";
-import LinkButton from "./LinkButton";
+import BlockButton from "./components/BlockButton";
+import MarkButton from "./components/MarkButton";
+import LinkButton from "./withLinks/components/LinkButton";
 import initialValue from "./InitialValue";
 import CustomEditor from "./CustomEditor";
 import { makeStyles } from "@material-ui/core/styles";
@@ -47,7 +49,7 @@ const RichTextExample = () => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
-    () => withLinks(withHistory(withReact(createEditor()))),
+    () => withTables(withLinks(withHistory(withReact(createEditor())))),
     []
   );
 
@@ -80,6 +82,8 @@ const RichTextExample = () => {
             <FormatListBulletedIcon />
           </BlockButton>
           <LinkButton />
+          <InsertTableButton />
+          <DeleteTableButton />
         </div>
         <FormControl>
           <InputBase label="title" inputProps={{ "aria-label": "naked" }} />

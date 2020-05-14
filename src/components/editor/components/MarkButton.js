@@ -1,16 +1,16 @@
 import React from "react";
 import { useSlate } from "slate-react";
-import CustomEditor from "./CustomEditor";
+import CustomEditor from "../CustomEditor";
 import IconButton from "@material-ui/core/IconButton";
 
-const BlockButton = ({ format, children }) => {
+const MarkButton = ({ format, children }) => {
   const editor = useSlate();
   return (
     <IconButton
-      active={CustomEditor.isMarkActive(editor, format)}
+      // active={CustomEditor.isMarkActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
-        CustomEditor.toggleBlock(editor, format);
+        CustomEditor.toggleMark(editor, format);
       }}
     >
       {children}
@@ -18,4 +18,4 @@ const BlockButton = ({ format, children }) => {
   );
 };
 
-export default BlockButton;
+export default MarkButton;

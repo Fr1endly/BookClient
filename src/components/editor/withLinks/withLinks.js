@@ -1,7 +1,5 @@
-import CustomEditor from "./CustomEditor";
+import { wrapLink } from "./Helpers";
 import isUrl from "is-url";
-
-const { wrapLink } = CustomEditor;
 
 export const withLinks = (editor) => {
   const { insertData, insertText, isInline } = editor;

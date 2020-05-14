@@ -31,12 +31,27 @@ const Element = ({ attributes, children, element }) => {
           {children}
         </Link>
       );
-    default:
+    case "table":
       return (
-        <Typography {...attributes} variant="body1">
-          {children}
-        </Typography>
+        <table
+          style={{ border: "1px solid black", borderCollapse: "collapse" }}
+        >
+          <tbody {...attributes}>{children}</tbody>
+        </table>
       );
+    case "table-row":
+      return <tr {...attributes}>{children}</tr>;
+    case "table-cell":
+      return (
+        <td
+          {...attributes}
+          style={{ border: "2px solid #ddd", padding: "10px" }}
+        >
+          {children}
+        </td>
+      );
+    default:
+      return <p {...attributes}>{children}</p>;
   }
 };
 

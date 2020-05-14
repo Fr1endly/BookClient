@@ -23,6 +23,7 @@
     "slate": ">=0.55.0",
     "slate-history": "^0.57.1",
     "slate-react": "^0.57.1",
+    "undefined": "^0.1.0",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
