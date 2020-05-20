@@ -38,7 +38,7 @@ export const insertTable = (editor) => {
 
 export const deleteTable = (editor) => {
   const isTable = (n) => n.type === "table";
-  const tableItem = Editor.above(editor, { match: deleteTable.isTable });
+  const tableItem = Editor.above(editor, { match: (n) => isTable(n) });
 
   if (tableItem) {
     Transforms.removeNodes(editor, { at: tableItem[1] });
@@ -67,11 +67,15 @@ export const insertRow = (editor) => {
           .fill(colCount)
           .map(() => emptyCell),
       });
-      console.log(emptyRow(3));
-      Transforms.insertNodes(editor, emptyRow(currentRowElem.children.length), {
-        at: Path.next(currentRowPath),
-        select: true,
-      });
+
+      Transforms.insertNodes(
+        editor,
+        JSON.parse(JSON.stringify(emptyRow(currentRowElem.children.length))),
+        {
+          at: Path.next(currentRowPath),
+          select: true,
+        }
+      );
     }
   }
 };
@@ -127,7 +131,7 @@ export const insertColumn = (editor) => {
         children: [{ text: "" }],
       };
       //SELECT OPTION ??
-      Transforms.insertNodes(editor, emptyCell, {
+      Transforms.insertNodes(editor, JSON.parse(JSON.stringify(emptyCell)), {
         at: newCellPath,
         select: rowIdx === currentRowIdx,
       });
@@ -136,36 +140,36 @@ export const insertColumn = (editor) => {
 };
 
 export const deleteColumn = (editor) => {
-  const [match] = Editor.nodes(editor, { match: n => n.type === "table" });
-    const isTable = !!match;
+  const [match] = Editor.nodes(editor, { match: (n) => n.type === "table" });
+  const isTable = !!match;
 
-    if (isTable) {
-      const currentCellItem = Editor.above(editor, {
-        match: n => n.type === "table-cell"
+  if (isTable) {
+    const currentCellItem = Editor.above(editor, {
+      match: (n) => n.type === "table-cell",
+    });
+    const currentRowItem = Editor.above(editor, {
+      match: (n) => n.type === "table-row",
+    });
+    const currentTableItem = Editor.above(editor, {
+      match: (n) => n.type === "table",
+    });
+
+    if (
+      currentCellItem &&
+      currentRowItem &&
+      currentTableItem &&
+      //Cannot delete the last cell
+      currentRowItem[0].children.length > 1
+    ) {
+      const currentCellPath = currentCellItem[1];
+      const pathToDelete = currentCellPath.slice();
+      const replacePathPos = pathToDelete.length - 2;
+
+      currentTableItem[0].children.forEach((row, rowIdx) => {
+        pathToDelete[replacePathPos] = rowIdx;
+
+        Transforms.removeNodes(editor, { at: pathToDelete });
       });
-      const currentRowItem = Editor.above(editor, {
-        match: n => n.type === "table-row"
-      });
-      const currentTableItem = Editor.above(editor, {
-        match: n => n.type === "table"
-      });
-
-      if (
-        currentCellItem &&
-        currentRowItem &&
-        currentTableItem &&
-        //Cannot delete the last cell
-        currentRowItem[0].children.length > 1
-      ) {
-        const currentCellPath = currentCellItem[1];
-        const pathToDelete = currentCellPath.slice();
-        const replacePathPos = pathToDelete.length - 2;
-
-        currentTableItem[0].children.forEach((row, rowIdx) => {
-          pathToDelete[replacePathPos] = rowIdx;
-
-          Transforms.removeNodes(editor, { at: pathToDelete });
-        });
-      }
     }
-}
+  }
+};
