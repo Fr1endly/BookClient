@@ -30,8 +30,8 @@ import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import Divider from "@material-ui/core/Divider";
-import FormControl from "@material-ui/core/FormControl";
-import InputBase from "@material-ui/core/TextField";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { Input } from "@material-ui/core";
 
 const HOTKEYS = {
@@ -95,10 +95,14 @@ const RichTextExample = () => {
           <InsertColumnButton />
           <DeleteRowButton />
           <DeleteColumnButton />
+          <div style={{ display: "inline-flex" }}>
+            <TextField type="text" label="Title" />
+            <TextField label="Index" />
+            <Buttont type="submit" color="primary">
+              Submit
+            </Buttont>
+          </div>
         </div>
-        <FormControl>
-          <InputBase label="title" inputProps={{ "aria-label": "naked" }} />
-        </FormControl>
       </div>
       <Divider />
       <Editable
