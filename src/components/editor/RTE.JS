@@ -5,7 +5,14 @@ import { createEditor } from "slate";
 import { withHistory } from "slate-history";
 import { withLinks } from "./withLinks/withLinks";
 import { withTables } from "./withTables/withTables";
-import { InsertTableButton, DeleteTableButton } from "./withTables/Components";
+import {
+  InsertTableButton,
+  DeleteTableButton,
+  InsertColumnButton,
+  DeleteColumnButton,
+  InsertRowButton,
+  DeleteRowButton,
+} from "./withTables/Components";
 import Element from "./Element";
 import Leaf from "./Leaf";
 import BlockButton from "./components/BlockButton";
@@ -84,6 +91,10 @@ const RichTextExample = () => {
           <LinkButton />
           <InsertTableButton />
           <DeleteTableButton />
+          <InsertRowButton />
+          <InsertColumnButton />
+          <DeleteRowButton />
+          <DeleteColumnButton />
         </div>
         <FormControl>
           <InputBase label="title" inputProps={{ "aria-label": "naked" }} />

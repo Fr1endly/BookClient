@@ -34,7 +34,11 @@ const Element = ({ attributes, children, element }) => {
     case "table":
       return (
         <table
-          style={{ border: "1px solid black", borderCollapse: "collapse" }}
+          style={{
+            border: "1px solid black",
+            borderCollapse: "collapse",
+            width: "100%",
+          }}
         >
           <tbody {...attributes}>{children}</tbody>
         </table>
