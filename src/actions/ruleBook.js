@@ -6,6 +6,7 @@ import {
 } from "./types";
 import { setAlert } from "./alert";
 import axios from "axios";
+import { camelCase } from "lodash";
 
 //Open Drawer
 export const openDrawer = () => (dispatch) =>
@@ -33,16 +34,22 @@ export const fetchChapters = () => async (dispatch) => {
 };
 
 // Save chapter to db.
-export const saveChapter = (chapter) => async (dispatch) => {
+export const saveChapter = (chapter, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
-  const body = JSON.stringify(chapter);
+
+  const body = JSON.stringify({
+    ...chapter,
+    title: camelCase(chapter.title),
+  });
 
   try {
     await axios.post("http://localhost:3000/api/chapters", body, config);
+    history.push(`/rulebook/${camelCase(chapter.title)}`);
+    fetchChapters();
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { saveChapter } from "../../actions/ruleBook";
 import isHotkey from "is-hotkey";
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RichTextExample = ({ saveChapter }) => {
+const RichTextExample = ({ saveChapter, history }) => {
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
     title: "",
@@ -88,7 +89,7 @@ const RichTextExample = ({ saveChapter }) => {
       sections: JSON.stringify(value),
     };
 
-    saveChapter(chapter);
+    saveChapter(chapter, history);
   };
 
   return (
@@ -178,4 +179,6 @@ const RichTextExample = ({ saveChapter }) => {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { saveChapter })(RichTextExample);
+export default connect(mapStateToProps, { saveChapter })(
+  withRouter(RichTextExample)
+);

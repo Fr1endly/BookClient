@@ -40,12 +40,11 @@ const Display = ({ match, chapters, disabled }) => {
 
   // Finds chapter based on current URL paramters and gets it sections
   useEffect(() => {
-    if (chapters !== undefined) {
+    if (chapters) {
       let activeChapter = chapters.filter(
         (chapter) => chapter.title === match.params.title
       )[0];
-      if (activeChapter !== undefined)
-        setValue(JSON.parse(activeChapter.sections));
+      if (activeChapter) setValue(JSON.parse(activeChapter.sections));
     }
   }, [match.params]);
 

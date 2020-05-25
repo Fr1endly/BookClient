@@ -1,17 +1,17 @@
 import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchChapters } from "../../actions/ruleBook";
+import { Link as RouterLink } from "react-router-dom";
+import { startCase } from "lodash";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import Link from "@material-ui/core/Link";
-import { Link as RouterLink } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -55,15 +55,24 @@ export default connect(mapStateToProps, { fetchChapters })(
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader} />
+          <div className={classes.drawerHeader}>
+            <Typography variant="overline">Chapters</Typography>
+          </div>
+
           <Divider />
           <List>
             {chapters.map((chapter, index) => (
-              <ListItem button key={chapter.title}>
-                <Link component={RouterLink} to={`/rulebook/${chapter.title}`}>
-                  <ListItemText primary={chapter.title} />
-                </Link>
-              </ListItem>
+              <Link
+                key={chapter.title}
+                component={RouterLink}
+                to={`/rulebook/${chapter.title}`}
+              >
+                <ListItem button>
+                  <ListItemText
+                    primary={`${chapter.index} ${startCase(chapter.title)}`}
+                  />
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Drawer>
