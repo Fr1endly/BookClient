@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { connect } from "react-redux";
 import { saveChapter } from "../../actions/ruleBook";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, Slate } from "slate-react";
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RichTextExample = () => {
+const RichTextExample = ({ saveChapter }) => {
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
     title: "",
@@ -81,8 +82,13 @@ const RichTextExample = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handleSubmit fires");
-    saveChapter();
+
+    const chapter = {
+      ...formValue,
+      sections: JSON.stringify(value),
+    };
+
+    saveChapter(chapter);
   };
 
   return (
@@ -170,4 +176,6 @@ const RichTextExample = () => {
   );
 };
 
-export default RichTextExample;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { saveChapter })(RichTextExample);

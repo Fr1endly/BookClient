@@ -36,6 +36,7 @@ export const insertTable = (editor) => {
   Transforms.insertNodes(editor, table);
 };
 
+
 export const deleteTable = (editor) => {
   const isTable = (n) => n.type === "table";
   const tableItem = Editor.above(editor, { match: (n) => isTable(n) });

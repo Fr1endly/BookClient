@@ -4,6 +4,7 @@ import {
   TOGGLE_DRAWER,
   LOAD_CHAPTERS,
 } from "./types";
+import { setAlert } from "./alert";
 import axios from "axios";
 
 //Open Drawer
@@ -32,20 +33,20 @@ export const fetchChapters = () => async (dispatch) => {
 };
 
 // Save chapter to db.
-export const saveChapter = (formValue) => async (dispatch) => {
-  console.log(formValue);
-  console.log("saveChapter fire");
-
+export const saveChapter = (chapter) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
-  const body = JSON.stringify({ index, title, sections });
+  const body = JSON.stringify(chapter);
+
   try {
-    const sections = JSON.stringify(chapter.content);
     await axios.post("http://localhost:3000/api/chapters", body, config);
   } catch (err) {
-    console.log(err);
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
   }
 };
