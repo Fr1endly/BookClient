@@ -46,7 +46,7 @@ const Display = ({ match, chapters, disabled }) => {
       )[0];
       if (activeChapter) setValue(JSON.parse(activeChapter.sections));
     }
-  }, [match.params]);
+  }, [match.params, chapters]);
 
   return (
     <Fragment>
