@@ -32,8 +32,20 @@ export const fetchChapters = () => async (dispatch) => {
 };
 
 // Save chapter to db.
-export const saveChapter = (chapter) => async (dispatch) => {
+export const saveChapter = (formValue) => async (dispatch) => {
+  console.log(formValue);
+  console.log("saveChapter fire");
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ index, title, sections });
   try {
-    const content = JSON.stringify(chapter.content);
-  } catch (err) {}
+    const sections = JSON.stringify(chapter.content);
+    await axios.post("http://localhost:3000/api/chapters", body, config);
+  } catch (err) {
+    console.log(err);
+  }
 };

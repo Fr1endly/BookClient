@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { saveChapter } from "../../actions/ruleBook";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, Slate } from "slate-react";
 import { createEditor } from "slate";
@@ -32,7 +33,6 @@ import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Input } from "@material-ui/core";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -48,10 +48,20 @@ const useStyles = makeStyles((theme) => ({
   editor: {
     border: "1px solid black",
   },
+  input: {
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const RichTextExample = () => {
   const classes = useStyles();
+  const [formValue, setFormValue] = useState({
+    title: "",
+    index: 0,
+  });
+
+  const { title, index } = formValue;
+
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -59,6 +69,21 @@ const RichTextExample = () => {
     () => withTables(withLinks(withHistory(withReact(createEditor())))),
     []
   );
+  //
+
+  const handleChange = (e) => {
+    //recreating formValue
+    setFormValue({
+      ...formValue,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("handleSubmit fires");
+    saveChapter();
+  };
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
@@ -95,22 +120,17 @@ const RichTextExample = () => {
           <InsertColumnButton />
           <DeleteRowButton />
           <DeleteColumnButton />
-          <div style={{ display: "inline-flex" }}>
-            <TextField type="text" label="Title" />
-            <TextField label="Index" />
-            <Buttont type="submit" color="primary">
-              Submit
-            </Buttont>
-          </div>
         </div>
       </div>
       <Divider />
       <Editable
+        style={{ height: "80%" }}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         placeholder="Entser some rich text…"
         spellCheck
         autoFocus
+        style={{ minHeight: "400px" }}
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event)) {
@@ -121,6 +141,31 @@ const RichTextExample = () => {
           }
         }}
       />
+      <div className={classes.toolbar} style={{ justifyContent: "center" }}>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <TextField
+            onChange={(e) => handleChange(e)}
+            name="title"
+            value={formValue.title}
+            type="text"
+            label="Title"
+            className={classes.input}
+            variant="outlined"
+          />
+          <TextField
+            onChange={(e) => handleChange(e)}
+            name="index"
+            value={formValue.index}
+            label="Index"
+            className={classes.input}
+            variant="outlined"
+            type="number"
+          />
+          <Button type="submit" color="primary">
+            Submit
+          </Button>
+        </form>
+      </div>
     </Slate>
   );
 };
