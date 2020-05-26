@@ -32,7 +32,7 @@ const UserTable = ({ chapters, fetchChapters }) => {
     <Fragment>
       <div>
         <IconButton aria-label="Add new chapter" color="secondary">
-          <Link component={RouterLink} to="/admin/newChapter" color="inherit">
+          <Link component={RouterLink} to="/admin/editor" color="inherit">
             <AddIcon />
           </Link>
         </IconButton>
@@ -50,7 +50,12 @@ const UserTable = ({ chapters, fetchChapters }) => {
         <TableBody>
           {chapters.map((chapter) => (
             <TableRow key={chapter._id}>
-              <TableCell>{chapter.title}</TableCell>
+              <Link
+                component={RouterLink}
+                to={`/admin/editChapter/${chapter._id}`}
+              >
+                <TableCell>{chapter.title}</TableCell>
+              </Link>
               <TableCell align="right">{chapter.index}</TableCell>
             </TableRow>
           ))}

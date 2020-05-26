@@ -3,7 +3,6 @@ import { GET_USERS, GET_USER_BY_ID, CLEAR_USER } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 
-// TO-DO SETALERTS IN CATCH BLOCKS
 // Fetch all users
 export const getUsers = () => async (dispatch) => {
   if (localStorage.token) {

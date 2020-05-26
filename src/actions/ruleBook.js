@@ -3,6 +3,7 @@ import {
   SET_DRAWER_CLOSE,
   TOGGLE_DRAWER,
   LOAD_CHAPTERS,
+  SELECT_CHAPTER,
 } from "./types";
 import { setAlert } from "./alert";
 import axios from "axios";
@@ -56,4 +57,9 @@ export const saveChapter = (chapter, history) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
   }
+};
+
+// Select active chapter for editing
+export const getChapterById = (id) => (dispatch) => {
+  
 };

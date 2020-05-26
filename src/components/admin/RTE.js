@@ -40,32 +40,12 @@ const initialValue = [
       { text: "!" },
     ],
   },
-  {
-    type: "paragraph",
-    children: [
-      {
-        text:
-          "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: "bold", bold: true },
-      {
-        text:
-          ", or add a semantically rendered block quote in the middle of the page, like this:",
-      },
-    ],
-  },
-  {
-    type: "block-quote",
-    children: [{ text: "A wise quote." }],
-  },
-  {
-    type: "paragraph",
-    children: [{ text: "Try it out for yourself!" }],
-  },
+
 ];
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 
+// RICH TEXT EDITOR
 const RTE = () => {
   const classes = useStyles();
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -228,5 +208,7 @@ const BlockButton = ({ format, children }) => {
     </IconButton>
   );
 };
+
+
 
 export default connect()(RTE);

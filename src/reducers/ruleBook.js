@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   open: false,
+  chapter: null,
   chapters: [],
   loading: false,
 };

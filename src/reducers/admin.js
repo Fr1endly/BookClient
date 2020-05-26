@@ -1,9 +1,15 @@
-import { GET_USERS, GET_USER_BY_ID, CLEAR_USER } from "../../src/actions/types";
+import {
+  GET_USERS,
+  GET_USER_BY_ID,
+  CLEAR_USER,
+  SELECT_CHAPTER,
+} from "../../src/actions/types";
 
 const initialState = {
   users: [],
   user: null,
-  loading: true
+  chapter: null,
+  loading: true,
 };
 
 export default (state = initialState, actions) => {
@@ -13,18 +19,23 @@ export default (state = initialState, actions) => {
     case GET_USERS:
       return {
         ...state,
-        users: payload
+        users: payload,
       };
     case GET_USER_BY_ID:
       return {
         ...state,
         user: payload,
-        loading: false
+        loading: false,
       };
     case CLEAR_USER:
       return {
         ...state,
-        user: null
+        user: null,
+      };
+    case SELECT_CHAPTER:
+      return {
+        ...state,
+        chapter: payload,
       };
     default:
       return state;

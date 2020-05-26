@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { saveChapter } from "../../actions/ruleBook";
@@ -55,15 +55,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RichTextExample = ({ saveChapter, history }) => {
+//RICH TEXT EDITOR
+const RTE = ({ saveChapter, history, readOnly, match, chapters }) => {
+  console.log(readOnly);
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
     title: "",
     index: 0,
   });
 
-  const { title, index } = formValue;
-
+  // SLATE EDITORS CONTENT VALUE
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -71,10 +72,8 @@ const RichTextExample = ({ saveChapter, history }) => {
     () => withTables(withLinks(withHistory(withReact(createEditor())))),
     []
   );
-  //
 
   const handleChange = (e) => {
-    //recreating formValue
     setFormValue({
       ...formValue,
       [e.target.name]: e.target.value,
@@ -92,43 +91,57 @@ const RichTextExample = ({ saveChapter, history }) => {
     saveChapter(chapter, history);
   };
 
+  if (readOnly) {
+    useEffect(() => {
+      if (chapters) {
+        let activeChapter = chapters.filter(
+          (chapter) => chapter.title === match.params.title
+        )[0];
+        if (activeChapter) setValue(JSON.parse(activeChapter.sections));
+      }
+    }, [match.params, chapters]);
+  }
+
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
-      <div className={classes.toolbar}>
-        <div className={classes.buttonGroup}>
-          <MarkButton format="bold">
-            <FormatBoldIcon />
-          </MarkButton>
-          <MarkButton format="italic">
-            <FormatItalicIcon />
-          </MarkButton>
-          <MarkButton format="underline">
-            <FormatUnderlinedIcon />
-          </MarkButton>
-          <BlockButton format="heading-one">
-            <LooksOneIcon />
-          </BlockButton>
-          <BlockButton format="heading-two">
-            <LooksTwoIcon />
-          </BlockButton>
-          <BlockButton format="block-quote">
-            <FormatQuoteIcon />
-          </BlockButton>
-          <BlockButton format="numbered-list">
-            <FormatListNumberedIcon />
-          </BlockButton>
-          <BlockButton format="bulleted-list">
-            <FormatListBulletedIcon />
-          </BlockButton>
-          <LinkButton />
-          <InsertTableButton />
-          <DeleteTableButton />
-          <InsertRowButton />
-          <InsertColumnButton />
-          <DeleteRowButton />
-          <DeleteColumnButton />
+      {readOnly ? null : (
+        <div className={classes.toolbar}>
+          <div className={classes.buttonGroup}>
+            <MarkButton format="bold">
+              <FormatBoldIcon />
+            </MarkButton>
+            <MarkButton format="italic">
+              <FormatItalicIcon />
+            </MarkButton>
+            <MarkButton format="underline">
+              <FormatUnderlinedIcon />
+            </MarkButton>
+            <BlockButton format="heading-one">
+              <LooksOneIcon />
+            </BlockButton>
+            <BlockButton format="heading-two">
+              <LooksTwoIcon />
+            </BlockButton>
+            <BlockButton format="block-quote">
+              <FormatQuoteIcon />
+            </BlockButton>
+            <BlockButton format="numbered-list">
+              <FormatListNumberedIcon />
+            </BlockButton>
+            <BlockButton format="bulleted-list">
+              <FormatListBulletedIcon />
+            </BlockButton>
+            <LinkButton />
+            <InsertTableButton />
+            <DeleteTableButton />
+            <InsertRowButton />
+            <InsertColumnButton />
+            <DeleteRowButton />
+            <DeleteColumnButton />
+          </div>
         </div>
-      </div>
+      )}
+
       <Divider />
       <Editable
         style={{ height: "80%" }}
@@ -137,6 +150,7 @@ const RichTextExample = ({ saveChapter, history }) => {
         placeholder="Entser some rich text…"
         spellCheck
         autoFocus
+        readOnly={readOnly ? true : false}
         style={{ minHeight: "400px" }}
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
@@ -148,37 +162,40 @@ const RichTextExample = ({ saveChapter, history }) => {
           }
         }}
       />
-      <div className={classes.toolbar} style={{ justifyContent: "center" }}>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <TextField
-            onChange={(e) => handleChange(e)}
-            name="title"
-            value={formValue.title}
-            type="text"
-            label="Title"
-            className={classes.input}
-            variant="outlined"
-          />
-          <TextField
-            onChange={(e) => handleChange(e)}
-            name="index"
-            value={formValue.index}
-            label="Index"
-            className={classes.input}
-            variant="outlined"
-            type="number"
-          />
-          <Button type="submit" color="primary">
-            Submit
-          </Button>
-        </form>
-      </div>
+      {readOnly ? null : (
+        <div className={classes.toolbar} style={{ justifyContent: "center" }}>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <TextField
+              onChange={(e) => handleChange(e)}
+              name="title"
+              value={formValue.title}
+              type="text"
+              label="Title"
+              className={classes.input}
+              variant="outlined"
+            />
+            <TextField
+              onChange={(e) => handleChange(e)}
+              name="index"
+              value={formValue.index}
+              label="Index"
+              className={classes.input}
+              variant="outlined"
+              type="number"
+            />
+            <Button type="submit" color="primary">
+              Submit
+            </Button>
+          </form>
+        </div>
+      )}
     </Slate>
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  chapter: state.ruleBook,
+  chapters: state.ruleBook.chapters,
+});
 
-export default connect(mapStateToProps, { saveChapter })(
-  withRouter(RichTextExample)
-);
+export default connect(mapStateToProps, { saveChapter })(withRouter(RTE));
