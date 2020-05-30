@@ -30,6 +30,9 @@ const UserTable = ({ chapters, fetchChapters }) => {
 
   return (
     <Fragment>
+      <Typography component="h2" variant="h6" color="primary">
+        Rulebook chapters
+      </Typography>
       <div>
         <IconButton aria-label="Add new chapter" color="secondary">
           <Link component={RouterLink} to="/admin/editor" color="inherit">
@@ -37,9 +40,6 @@ const UserTable = ({ chapters, fetchChapters }) => {
           </Link>
         </IconButton>
       </div>
-      <Typography component="h2" variant="h6" color="primary">
-        Rulebook chapters
-      </Typography>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -50,12 +50,14 @@ const UserTable = ({ chapters, fetchChapters }) => {
         <TableBody>
           {chapters.map((chapter) => (
             <TableRow key={chapter._id}>
-              <Link
-                component={RouterLink}
-                to={`/admin/editChapter/${chapter._id}`}
-              >
-                <TableCell>{chapter.title}</TableCell>
-              </Link>
+              <TableCell>
+                <Link
+                  component={RouterLink}
+                  to={`/admin/editChapter/${chapter._id}`}
+                >
+                  {chapter.title}
+                </Link>
+              </TableCell>
               <TableCell align="right">{chapter.index}</TableCell>
             </TableRow>
           ))}

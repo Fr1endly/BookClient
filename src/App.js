@@ -20,8 +20,6 @@ import AdminRoute from "./components/routing/AdminRoute";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import CP from "./cp";
-
 export default () => {
   useEffect(() => {
     if (localStorage.token) {
@@ -56,7 +54,12 @@ export default () => {
               component={AdminUserView}
             />
             <AdminRoute exact path="/admin/editor" component={RTE} />
-            <AdminRoute exact path="/admin/editChapter/:id" component={RTE} />
+            <AdminRoute
+              exact
+              path="/admin/editChapter/:id"
+              component={RTE}
+              edit={true}
+            />
           </Switch>
         </Router>
       </Container>

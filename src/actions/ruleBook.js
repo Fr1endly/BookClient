@@ -60,6 +60,38 @@ export const saveChapter = (chapter, history) => async (dispatch) => {
 };
 
 // Select active chapter for editing
-export const getChapterById = (id) => (dispatch) => {
-  
+export const getChapterById = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/chapters/${id}`);
+    const chapter = res.data;
+    dispatch({
+      type: "SELECT_CHAPTER",
+      payload: chapter,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editChapter = (chapter, history, id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({
+    ...chapter,
+    title: camelCase(chapter.title),
+  });
+
+  try {
+    await axios.post(`http://localhost:3000/api/chapters/${id}`, body, config);
+    history.push(`/admin/`);
+  } catch (error) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+  }
 };

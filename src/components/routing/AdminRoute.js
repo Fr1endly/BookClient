@@ -14,7 +14,7 @@ const AdminRoute = (
       ) : !isAdmin ? (
         <div>Not authorized.</div>
       ) : (
-        <Component {...props} />
+        <Component {...props} {...rest} />
       )
     }
   />

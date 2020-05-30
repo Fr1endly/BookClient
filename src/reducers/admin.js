@@ -9,6 +9,7 @@ const initialState = {
   users: [],
   user: null,
   chapter: null,
+  chapterId: null,
   loading: true,
 };
 
@@ -36,6 +37,7 @@ export default (state = initialState, actions) => {
       return {
         ...state,
         chapter: payload,
+        chapterId: payload._id,
       };
     default:
       return state;

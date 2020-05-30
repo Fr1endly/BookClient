@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { saveChapter } from "../../actions/ruleBook";
+import {
+  saveChapter,
+  getChapterById,
+  editChapter,
+} from "../../actions/ruleBook";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, Slate } from "slate-react";
 import { createEditor } from "slate";
@@ -56,15 +60,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //RICH TEXT EDITOR
-const RTE = ({ saveChapter, history, readOnly, match, chapters }) => {
-  console.log(readOnly);
+const RTE = ({
+  getChapterById,
+  saveChapter,
+  history,
+  readOnly,
+  match,
+  chapters,
+  chapter,
+  chapterId,
+  editChapter,
+  edit,
+}) => {
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
     title: "",
     index: 0,
   });
 
-  // SLATE EDITORS CONTENT VALUE
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -88,9 +101,14 @@ const RTE = ({ saveChapter, history, readOnly, match, chapters }) => {
       sections: JSON.stringify(value),
     };
 
-    saveChapter(chapter, history);
+    if (edit) {
+      editChapter(chapter, history, match.params.id);
+    } else {
+      saveChapter(chapter, history);
+    }
   };
 
+  // Load chapter to display readOnly version to user
   if (readOnly) {
     useEffect(() => {
       if (chapters) {
@@ -99,7 +117,18 @@ const RTE = ({ saveChapter, history, readOnly, match, chapters }) => {
         )[0];
         if (activeChapter) setValue(JSON.parse(activeChapter.sections));
       }
-    }, [match.params, chapters]);
+    }, [match, chapters]);
+  }
+  // Load chapter for editing to admin user
+  if (edit) {
+    useEffect(() => {
+      getChapterById(match.params.id);
+      if (chapter) {
+        setValue(JSON.parse(chapter.sections));
+        const { index, title } = chapter;
+        setFormValue({ title, index });
+      }
+    }, [getChapterById, match.params.id, chapterId]);
   }
 
   return (
@@ -194,8 +223,13 @@ const RTE = ({ saveChapter, history, readOnly, match, chapters }) => {
 };
 
 const mapStateToProps = (state) => ({
-  chapter: state.ruleBook,
+  chapter: state.admin.chapter,
   chapters: state.ruleBook.chapters,
+  chapterId: state.admin.chapterId,
 });
 
-export default connect(mapStateToProps, { saveChapter })(withRouter(RTE));
+export default connect(mapStateToProps, {
+  saveChapter,
+  getChapterById,
+  editChapter,
+})(withRouter(RTE));
