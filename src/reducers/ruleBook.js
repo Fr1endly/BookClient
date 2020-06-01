@@ -3,13 +3,15 @@ import {
   SET_DRAWER_CLOSE,
   TOGGLE_DRAWER,
   LOAD_CHAPTERS,
+  REMOVE_CHAPTER,
+  FILTER_CHAPTERS,
+  CLEAR_FILTERED_CHAPTERS,
 } from "../actions/types";
 
 const initialState = {
   open: false,
-  chapter: null,
   chapters: [],
-  loading: false,
+  filteredChapters: [],
 };
 
 export default (state = initialState, action) => {
@@ -35,6 +37,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         chapters: payload,
+      };
+    case REMOVE_CHAPTER:
+      return {
+        ...state,
+        chapters: state.chapters.filter((chapter) => chapter._id !== payload),
+      };
+    case FILTER_CHAPTERS:
+      return {
+        ...state,
+        filteredChapters: state.chapters.filter((chapter) => {
+          return Object.keys(chapter).some((key) =>
+            chapter[key].toString().toLowerCase().includes(payload)
+          );
+        }),
+      };
+    case CLEAR_FILTERED_CHAPTERS:
+      return {
+        ...state,
+        filteredChapters: [],
       };
     default:
       return state;

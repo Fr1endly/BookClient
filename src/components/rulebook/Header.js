@@ -1,6 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { toggleDrawer } from "../../actions/ruleBook";
+import {
+  toggleDrawer,
+  filterChapters,
+  clearFilteredChapters,
+} from "../../actions/ruleBook";
 
 import clsx from "clsx";
 import { makeStyles, fade } from "@material-ui/core/styles";
@@ -8,7 +12,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
-import AddIcon from "@material-ui/icons/Add";
 import TocIcon from "@material-ui/icons/Toc";
 
 const drawerWidth = 240;
@@ -81,10 +84,30 @@ const mapStateToProps = (state) => ({
   ruleBook: state.ruleBook,
 });
 
-export default connect(mapStateToProps, { toggleDrawer })(
-  ({ toggleDrawer, ruleBook: { open } }) => {
+export default connect(mapStateToProps, {
+  toggleDrawer,
+  filterChapters,
+  clearFilteredChapters,
+})(
+  ({
+    toggleDrawer,
+    filterChapters,
+    clearFilteredChapters,
+    ruleBook: { open },
+  }) => {
     const classes = useStyles();
     const [value, setValue] = useState("");
+
+    const handleChange = (e) => {
+      setValue(e.target.value);
+      filterChapters(value.toLowerCase());
+    };
+
+    useEffect(() => {
+      if (value.length === 0) {
+        clearFilteredChapters();
+      }
+    }, [value]);
 
     const handleDrawerToggle = () => {
       toggleDrawer();
@@ -115,7 +138,7 @@ export default connect(mapStateToProps, { toggleDrawer })(
             </div>
             <InputBase
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => handleChange(e)}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,

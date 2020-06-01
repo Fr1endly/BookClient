@@ -1,19 +1,19 @@
 import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { fetchChapters } from "../../actions/ruleBook";
+import { fetchChapters, deleteChapter } from "../../actions/ruleBook";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Link from "@material-ui/core/Link";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   userTablePaper: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserTable = ({ chapters, fetchChapters }) => {
+const UserTable = ({ chapters, fetchChapters, deleteChapter }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -44,7 +44,8 @@ const UserTable = ({ chapters, fetchChapters }) => {
         <TableHead>
           <TableRow>
             <TableCell>Chapter title</TableCell>
-            <TableCell align="right">Chapter index</TableCell>
+            <TableCell>Chapter index</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -58,7 +59,15 @@ const UserTable = ({ chapters, fetchChapters }) => {
                   {chapter.title}
                 </Link>
               </TableCell>
-              <TableCell align="right">{chapter.index}</TableCell>
+              <TableCell>{chapter.index}</TableCell>
+              <TableCell align="right">
+                <IconButton
+                  color="secondary"
+                  onClick={(e) => deleteChapter(chapter._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -71,4 +80,6 @@ const mapStateToProps = (state) => ({
   chapters: state.ruleBook.chapters,
 });
 
-export default connect(mapStateToProps, { fetchChapters })(UserTable);
+export default connect(mapStateToProps, { fetchChapters, deleteChapter })(
+  UserTable
+);

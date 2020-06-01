@@ -4,6 +4,9 @@ import {
   TOGGLE_DRAWER,
   LOAD_CHAPTERS,
   SELECT_CHAPTER,
+  REMOVE_CHAPTER,
+  FILTER_CHAPTERS,
+  CLEAR_FILTERED_CHAPTERS,
 } from "./types";
 import { setAlert } from "./alert";
 import axios from "axios";
@@ -21,7 +24,7 @@ export const closeDrawer = () => (dispatch) =>
 export const toggleDrawer = () => (dispatch) =>
   dispatch({ type: TOGGLE_DRAWER });
 
-// Load chapters and sort them.
+// FETCH chapters and sort them.
 export const fetchChapters = () => async (dispatch) => {
   try {
     const res = await axios.get("http://localhost:3000/api/chapters");
@@ -34,7 +37,7 @@ export const fetchChapters = () => async (dispatch) => {
   }
 };
 
-// Save chapter to db.
+// SAVE chapter to db.
 export const saveChapter = (chapter, history) => async (dispatch) => {
   const config = {
     headers: {
@@ -73,6 +76,7 @@ export const getChapterById = (id) => async (dispatch) => {
   }
 };
 
+// EDIT chapter from admin panel
 export const editChapter = (chapter, history, id) => async (dispatch) => {
   const config = {
     headers: {
@@ -94,4 +98,34 @@ export const editChapter = (chapter, history, id) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
   }
+};
+
+// DELETE chapter from admin panel
+export const deleteChapter = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`http://localhost:3000/api/chapters/${id}`);
+    dispatch({
+      type: REMOVE_CHAPTER,
+      payload: id,
+    });
+  } catch (error) {
+    console.log(error);
+    // if (errors) {
+    //   errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    // }
+  }
+};
+
+// filter search chapters
+export const filterChapters = (value) => (dispatch) => {
+  dispatch({
+    type: FILTER_CHAPTERS,
+    payload: value,
+  });
+};
+
+export const clearFilteredChapters = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_FILTERED_CHAPTERS,
+  });
 };

@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import clsx from "clsx";
 import SlateEditor from "../editor/RTE";
+import searchResults from "./SearchResults";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import SearchResults from "./SearchResults";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Body = (props) => {
   const classes = useStyles();
-  const { open } = props;
+  const { open, searchResults } = props;
   return (
     <Fragment>
       <main
@@ -43,7 +43,11 @@ const Body = (props) => {
           [classes.contentShift]: open,
         })}
       >
-        <SlateEditor readOnly={true} />
+        {searchResults.length > 0 ? (
+          <SearchResults />
+        ) : (
+          <SlateEditor readOnly={true} />
+        )}
       </main>
     </Fragment>
   );
@@ -51,6 +55,7 @@ const Body = (props) => {
 
 const mapStateToProps = (state) => ({
   open: state.ruleBook.open,
+  searchResults: state.ruleBook.filteredChapters,
 });
 
 export default connect(mapStateToProps)(Body);

@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   editor: {
-    border: "1px solid black",
+    background: theme.palette.background.paper,
   },
   input: {
     marginRight: theme.spacing(2),
@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 //RICH TEXT EDITOR
 const RTE = ({
+  searchDisplay,
   getChapterById,
   saveChapter,
   history,
@@ -71,6 +72,7 @@ const RTE = ({
   chapterId,
   editChapter,
   edit,
+  sections,
 }) => {
   const classes = useStyles();
   const [formValue, setFormValue] = useState({
@@ -109,7 +111,7 @@ const RTE = ({
   };
 
   // Load chapter to display readOnly version to user
-  if (readOnly) {
+  if (readOnly && !searchDisplay) {
     useEffect(() => {
       if (chapters) {
         let activeChapter = chapters.filter(
@@ -129,6 +131,12 @@ const RTE = ({
         setFormValue({ title, index });
       }
     }, [getChapterById, match.params.id, chapterId]);
+  }
+
+  if (sections) {
+    useEffect(() => {
+      setValue(sections);
+    }, []);
   }
 
   return (
@@ -171,16 +179,19 @@ const RTE = ({
         </div>
       )}
 
-      <Divider />
+      <Divider style={{ marginBottom: "20px" }} />
       <Editable
-        style={{ height: "80%" }}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         placeholder="Entser some rich text…"
         spellCheck
         autoFocus
         readOnly={readOnly ? true : false}
-        style={{ minHeight: "400px" }}
+        style={{
+          minHeight: searchDisplay ? null : "400px",
+          maxHeight: searchDisplay ? "10px" : null,
+          background: "#fff",
+        }}
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event)) {
