@@ -1,4 +1,5 @@
-import { Editor, Transforms, Range } from "slate";
+import { Editor, Transforms, Range, Text } from "slate";
+import escapeHtml from "escape-html";
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 
@@ -44,7 +45,7 @@ const CustomEditor = {
       Editor.addMark(editor, format, true);
     }
   },
-  
+
   insertLink(editor, url) {
     if (editor.selection) {
       CustomEditor.wrapLink(editor, url);
@@ -79,6 +80,42 @@ const CustomEditor = {
       Transforms.wrapNodes(editor, link, { split: true });
       Transforms.collapse(editor, { edge: "end" });
     }
+  },
+  serialiseHtmlfromNode(node) {
+    if (Text.isText(node)) {
+      if (node["bold"]) return `<strong>${escapeHtml(node.text)}</strong>`;
+      if (node["code"]) return `<code>${escapeHtml(node.text)}</code>;`;
+      if (node["italic"]) return `<em>${escapeHtml(node.text)}</em>;`;
+      if (node["underline"]) return `<u>${escapeHtml(node.text)}</u>`;
+      else return escapeHtml(node.text);
+    }
+
+    const children = node.children
+      .map((n) => CustomEditor.serialiseHtmlfromNode(n))
+      .join("");
+
+    switch (node.type) {
+      case "quote":
+        return `<blockquote>${children}</blockquote>`;
+      case "paragraph":
+        return `<p>${children}</p>`;
+      case "link":
+        return `<a href="${escapeHtml(node.url)}">${children}</a>`;
+      case "table":
+        return `<table><tbody>${children}</tbody></table>`;
+      case "table-row":
+        return `<tr>${children}</tr>`;
+      case "table-cell":
+        return `<td>${children}</td>`;
+      default:
+        return children;
+    }
+  },
+  serialiseHtmlFromValue(value) {
+    const html = value
+      .map((node) => CustomEditor.serialiseHtmlfromNode(node))
+      .join("");
+    return html;
   },
 };
 

@@ -12,30 +12,13 @@ import { createEditor } from "slate";
 import { withHistory } from "slate-history";
 import { withLinks } from "./withLinks/withLinks";
 import { withTables } from "./withTables/withTables";
-import {
-  InsertTableButton,
-  DeleteTableButton,
-  InsertColumnButton,
-  DeleteColumnButton,
-  InsertRowButton,
-  DeleteRowButton,
-} from "./withTables/Components";
+import Toolbar from "./components/Toolbar";
+
 import Element from "./Element";
 import Leaf from "./Leaf";
-import BlockButton from "./components/BlockButton";
-import MarkButton from "./components/MarkButton";
-import LinkButton from "./withLinks/components/LinkButton";
 import initialValue from "./InitialValue";
 import CustomEditor from "./CustomEditor";
 import { makeStyles } from "@material-ui/core/styles";
-import FormatBoldIcon from "@material-ui/icons/FormatBold";
-import FormatItalicIcon from "@material-ui/icons/FormatItalic";
-import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
-import LooksOneIcon from "@material-ui/icons/LooksOne";
-import LooksTwoIcon from "@material-ui/icons/LooksTwo";
-import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
-import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -141,43 +124,7 @@ const RTE = ({
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
-      {readOnly ? null : (
-        <div className={classes.toolbar}>
-          <div className={classes.buttonGroup}>
-            <MarkButton format="bold">
-              <FormatBoldIcon />
-            </MarkButton>
-            <MarkButton format="italic">
-              <FormatItalicIcon />
-            </MarkButton>
-            <MarkButton format="underline">
-              <FormatUnderlinedIcon />
-            </MarkButton>
-            <BlockButton format="heading-one">
-              <LooksOneIcon />
-            </BlockButton>
-            <BlockButton format="heading-two">
-              <LooksTwoIcon />
-            </BlockButton>
-            <BlockButton format="block-quote">
-              <FormatQuoteIcon />
-            </BlockButton>
-            <BlockButton format="numbered-list">
-              <FormatListNumberedIcon />
-            </BlockButton>
-            <BlockButton format="bulleted-list">
-              <FormatListBulletedIcon />
-            </BlockButton>
-            <LinkButton />
-            <InsertTableButton />
-            <DeleteTableButton />
-            <InsertRowButton />
-            <InsertColumnButton />
-            <DeleteRowButton />
-            <DeleteColumnButton />
-          </div>
-        </div>
-      )}
+      {readOnly ? null : <Toolbar />}
 
       <Divider style={{ marginBottom: "20px" }} />
       <Editable

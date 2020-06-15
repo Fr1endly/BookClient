@@ -5,7 +5,7 @@ import {
   filterChapters,
   clearFilteredChapters,
 } from "../../actions/ruleBook";
-
+import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles, fade } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,6 +13,32 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import TocIcon from "@material-ui/icons/Toc";
+
+import TextField from "@material-ui/core/TextField";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
+
+const filterOptions = createFilterOptions({
+  stringify: (option) => option.title,
+  stringify: (option) => option.sections,
+});
+
+const exportData = [
+  {
+    //ITEM
+    fname: "Jayne",
+    lname: "Washington",
+    email: "jaynewashington@exposa.com",
+    gender: "female",
+  },
+  {
+    fname: "Peterson",
+    lname: "Dalton",
+    email: "petersondalton@exposa.com",
+    gender: "male",
+  },
+];
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -44,10 +70,10 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade("#ADADAD", 0.15),
-    "&:hover": {
-      backgroundColor: fade("#ADADAD", 0.25),
-    },
+    // backgroundColor: fade("#ADADAD", 0.15),
+    // "&:hover": {
+    //   backgroundColor: fade("#ADADAD", 0.25),
+    // },
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -84,71 +110,91 @@ const mapStateToProps = (state) => ({
   ruleBook: state.ruleBook,
 });
 
+const Header = ({
+  history,
+  toggleDrawer,
+  filterChapters,
+  clearFilteredChapters,
+  ruleBook: { open, chapters },
+}) => {
+  const classes = useStyles();
+  // const [value, setValue] = useState("");
+  const [value, setValue] = React.useState(null);
+  const [inputValue, setInputValue] = React.useState("");
+
+  // const handleChange = (e) => {
+  //   setValue(e.target.value);
+  //   filterChapters(value.toLowerCase());
+  // };
+
+  // useEffect(() => {
+  //   if (value.length === 0) {
+  //     clearFilteredChapters();
+  //   }
+  // }, [value]);
+
+  const handleDrawerToggle = () => {
+    toggleDrawer();
+  };
+
+  useEffect(() => {
+    if (value) {
+      history.push(`/rulebook/${value.title}`);
+    }
+  }, [value]);
+  return (
+    <Fragment>
+      <Toolbar
+        style={{}}
+        position="fixed"
+        elevation={0}
+        color="inherit"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerToggle}
+          edge="start"
+          className={clsx(classes.menuButton)}
+        >
+          <TocIcon />
+        </IconButton>
+        <div className={classes.search}>
+          <Autocomplete
+            autoHighlight
+            freeSolo
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            inputValue={inputValue}
+            onInputChange={(event, newInputValue) => {
+              setInputValue(newInputValue);
+            }}
+            id="search"
+            options={chapters}
+            getOptionLabel={(option) => option.title}
+            filterOptions={filterOptions}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search"
+                InputProps={{ ...params.InputProps, disableUnderline: true }}
+              />
+            )}
+          />
+        </div>
+      </Toolbar>
+    </Fragment>
+  );
+};
+
 export default connect(mapStateToProps, {
   toggleDrawer,
   filterChapters,
   clearFilteredChapters,
-})(
-  ({
-    toggleDrawer,
-    filterChapters,
-    clearFilteredChapters,
-    ruleBook: { open },
-  }) => {
-    const classes = useStyles();
-    const [value, setValue] = useState("");
-
-    const handleChange = (e) => {
-      setValue(e.target.value);
-      filterChapters(value.toLowerCase());
-    };
-
-    useEffect(() => {
-      if (value.length === 0) {
-        clearFilteredChapters();
-      }
-    }, [value]);
-
-    const handleDrawerToggle = () => {
-      toggleDrawer();
-    };
-    return (
-      <Fragment>
-        <Toolbar
-          style={{}}
-          position="fixed"
-          elevation={0}
-          color="inherit"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-            edge="start"
-            className={clsx(classes.menuButton)}
-          >
-            <TocIcon />
-          </IconButton>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              value={value}
-              onChange={(e) => handleChange(e)}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-        </Toolbar>
-      </Fragment>
-    );
-  }
-);
+})(withRouter(Header));
