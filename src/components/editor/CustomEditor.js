@@ -99,6 +99,10 @@ const CustomEditor = {
         return `<blockquote>${children}</blockquote>`;
       case "paragraph":
         return `<p>${children}</p>`;
+      case "heading-one":
+        return `<h3>${children}</h3>`;
+      case "heading-two":
+        return `<h4>${children}</h4>`;
       case "link":
         return `<a href="${escapeHtml(node.url)}">${children}</a>`;
       case "table":
