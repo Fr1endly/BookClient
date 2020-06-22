@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   content: {
-    fontFamily: "IBM Plex Serif",
+    fontFamily: "Roboto",
     maxWidth: "700px",
     margin: "0 auto",
     fontSize: "18px",
